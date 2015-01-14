@@ -1,0 +1,17 @@
+PODS:
+  - Kiwi (2.3.1)
+  - RasterPrint (0.1.0)
+
+DEPENDENCIES:
+  - Kiwi
+  - RasterPrint (from `../`)
+
+EXTERNAL SOURCES:
+  RasterPrint:
+    :path: ../
+
+SPEC CHECKSUMS:
+  Kiwi: 73e1400209055ee9c8ba78c6012b6b642d0fb9f7
+  RasterPrint: ed135ba406cdeaeb5c96154dee4c585d4d703ccb
+
+COCOAPODS: 0.35.0
