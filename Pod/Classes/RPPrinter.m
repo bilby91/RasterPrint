@@ -145,30 +145,46 @@
 }
 
 - (NSMutableData *)leftMarginCommandForDocument:(RPDocument *)document {
-  u_int8_t lenght   = 7;
+  u_int8_t lenght = 5;
+  u_char endChar = 0;
 
-  //TODO: Make leftMargin use NSWindowsCP1252StringEncoding
-  uint8_t command[] = { 0x1b, '*', 'r', 'm', 'l', document.leftMarging, 0 };
+  uint8_t command[] = { 0x1b, '*', 'r', 'm', 'l' };
+  NSMutableData *data = [NSMutableData dataWithBytes:command length:lenght];
+  NSData *leftMarginData = [[NSString stringWithFormat:@"%i", document.leftMarging] dataUsingEncoding:NSWindowsCP1252StringEncoding];
 
-  return [NSMutableData dataWithBytes:command length:lenght];
+  [data appendData:leftMarginData];
+  [data appendBytes:&endChar length:1];
+
+  return data;
 }
 
 - (NSMutableData *)rightMarginCommandForDocument:(RPDocument *)document {
-  u_int8_t lenght   = 7;
+  u_int8_t lenght = 5;
+  u_char endChar = 0;
 
-    //TODO: Make rightMargin use NSWindowsCP1252StringEncoding
-  uint8_t command[] = { 0x1b, '*', 'r', 'm', 'r', document.rightMargin, 0 };
+  uint8_t command[] = { 0x1b, '*', 'r', 'm', 'r' };
+  NSMutableData *data = [NSMutableData dataWithBytes:command length:lenght];
+  NSData *leftMarginData = [[NSString stringWithFormat:@"%i", document.rightMargin] dataUsingEncoding:NSWindowsCP1252StringEncoding];
 
-  return [NSMutableData dataWithBytes:command length:lenght];
+  [data appendData:leftMarginData];
+  [data appendBytes:&endChar length:1];
+
+  return data;
 }
 
 - (NSMutableData *)pageLengthCommandForDocument:(RPDocument *)document {
-  u_int8_t lenght   = 6;
+  u_int8_t lenght = 4;
+  unsigned char endChar = 0;
 
-  //TODO: Make pageLength NSWindowsCP1252StringEncoding
-  uint8_t command[] = { 0x1b, '*', 'r', 'P', document.pageLength, 0 };
+  uint8_t command[] = { 0x1b, '*', 'r', 'P' };
 
-  return [NSMutableData dataWithBytes:command length:lenght];
+  NSMutableData *data = [NSMutableData dataWithBytes:command length:lenght];
+  NSData *leftMarginData = [[NSString stringWithFormat:@"%i", document.pageLength] dataUsingEncoding:NSWindowsCP1252StringEncoding];
+
+  [data appendData:leftMarginData];
+  [data appendBytes:&endChar length:1];
+
+  return data;
 }
 
 - (NSMutableData *)endOfPageModeCommandForDocument:(RPDocument *)document {

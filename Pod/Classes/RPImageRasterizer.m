@@ -11,8 +11,8 @@
 #import "RPDocument.h"
 
 size_t const bitsPerColorComponent  = 8;
+size_t const bytesPerPixel          = 4;
 u_int8_t const brightnessThreshhold = 127;
-int const bytesPerColorComponent    = 4;
 
 typedef struct RPPixel {
   u_int8_t red;
@@ -24,10 +24,10 @@ typedef struct RPPixel {
 #pragma mark - Drawing
 
 CGContextRef CreateBitmapContext(CGImageRef image) {
-  size_t width = CGImageGetWidth(image);
+  size_t width  = CGImageGetWidth(image);
   size_t height = CGImageGetHeight(image);
 
-  size_t bytesPerRow = width * bitsPerColorComponent;
+  size_t bytesPerRow = width * bytesPerPixel;
 
   CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
 
@@ -38,7 +38,7 @@ CGContextRef CreateBitmapContext(CGImageRef image) {
   CGContextRef context = CGBitmapContextCreate(bitmapData,
                                                width,
                                                height,
-                                               8,
+                                               bitsPerColorComponent,
                                                bytesPerRow,
                                                colorSpace,
                                                (CGBitmapInfo)kCGImageAlphaPremultipliedFirst);

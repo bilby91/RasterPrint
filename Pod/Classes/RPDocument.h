@@ -45,9 +45,9 @@ typedef NS_ENUM(u_int8_t, RPDocumentEndMode) {
 @property (nonatomic, assign) RPDocumentRasterSpeed speed;
 @property (nonatomic, assign) RPDocumentEndMode endOfPageMode;
 @property (nonatomic, assign) RPDocumentEndMode endOfDocumentMode;
-@property (nonatomic, assign) u_int8_t pageLength;
-@property (nonatomic, assign) u_int8_t leftMarging;
-@property (nonatomic, assign) u_int8_t rightMargin;
+@property (nonatomic, assign) int pageLength;
+@property (nonatomic, assign) int leftMarging;
+@property (nonatomic, assign) int rightMargin;
 
 /**
  *  Generates an image representation of the document
