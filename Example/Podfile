@@ -2,13 +2,10 @@ source 'https://github.com/CocoaPods/Specs.git'
 
 target 'RasterPrint', :exclusive => true do
   pod "RasterPrint", :path => "../"
-#  pod "StarIO", :path => "../../StarIO/StarIO.podspec"
-
+  pod "RasterPrint/Reactive", :path => "../"
 end
 
 target 'Tests', :exclusive => true do
   pod "RasterPrint", :path => "../"
-#  pod "StarIO", :path => "../../StarIO/StarIO.podspec"
-
   pod 'Kiwi'
 end

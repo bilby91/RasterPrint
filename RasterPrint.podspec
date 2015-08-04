@@ -6,15 +6,27 @@ Pod::Spec.new do |s|
   s.license          = 'MIT'
   s.author           = { "Martin Fernandez" => "me@bilby91.com" }
   s.source           = { :git => "https://github.com/bilby91/RasterPrint.git", :tag => s.version.to_s }
-  # s.social_media_url = 'https://twitter.com/bilby91'
+  s.social_media_url = 'https://twitter.com/bilby91'
 
   s.platform     = :ios, '7.0'
   s.requires_arc = true
 
-  s.source_files = 'Pod/Classes'
-  s.prefix_header_contents = #define symbolToDefine
-  s.public_header_files = 'Pod/Classes/**/*.h'
-  s.frameworks = 'ExternalAccessory', 'CoreGraphics'
-  s.vendored_frameworks = 'Vendor/StarIO.framework'
-#s.dependency 'StarIO'
+  s.default_subspec = 'Core'
+
+  s.subspec 'Core' do |cs|
+    cs.source_files        = 'Pod/Classes/Core'
+    cs.public_header_files = 'Pod/Classes/Core/**/*.h'
+
+    cs.frameworks = 'ExternalAccessory', 'CoreGraphics'
+
+    cs.vendored_frameworks = 'Vendor/StarIO.framework'
+  end
+
+  s.subspec 'Reactive' do |rs|
+    rs.source_files   = 'Pod/Classes/Reactive'
+
+    rs.dependency       'ReactiveCocoa', '~> 2.4'
+    rs.dependency       'RasterPrint/Core'
+  end
+
 end

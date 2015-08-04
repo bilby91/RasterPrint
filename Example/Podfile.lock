@@ -1,10 +1,23 @@
 PODS:
   - Kiwi (2.3.1)
-  - RasterPrint (0.1.0)
+  - RasterPrint (0.1.0):
+    - RasterPrint/Core (= 0.1.0)
+  - RasterPrint/Core (0.1.0)
+  - RasterPrint/Reactive (0.1.0):
+    - RasterPrint/Core
+    - ReactiveCocoa (~> 2.4)
+  - ReactiveCocoa (2.4.7):
+    - ReactiveCocoa/UI (= 2.4.7)
+  - ReactiveCocoa/Core (2.4.7):
+    - ReactiveCocoa/no-arc
+  - ReactiveCocoa/no-arc (2.4.7)
+  - ReactiveCocoa/UI (2.4.7):
+    - ReactiveCocoa/Core
 
 DEPENDENCIES:
   - Kiwi
   - RasterPrint (from `../`)
+  - RasterPrint/Reactive (from `../`)
 
 EXTERNAL SOURCES:
   RasterPrint:
@@ -12,6 +25,7 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   Kiwi: 73e1400209055ee9c8ba78c6012b6b642d0fb9f7
-  RasterPrint: ed135ba406cdeaeb5c96154dee4c585d4d703ccb
+  RasterPrint: de6e709ec6a756465664400f669a3b0070e433f9
+  ReactiveCocoa: 313fc53cc9aeb2bbbc3f5f13c7eac16478d9af8f
 
-COCOAPODS: 0.35.0
+COCOAPODS: 0.36.0.rc.1
