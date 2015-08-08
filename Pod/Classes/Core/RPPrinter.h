@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
+@class SMPort;
 @class PortInfo;
 @class RPDocument;
 
@@ -21,6 +22,8 @@
  *  @return A new printer
  */
 - (instancetype)initWithPortInfo:(PortInfo *)portInfo;
+
+- (instancetype)initWithPort:(SMPort *)port;
 
 /**
  *  Prints the given document synchronously

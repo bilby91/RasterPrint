@@ -24,8 +24,8 @@ EXTERNAL SOURCES:
     :path: ../
 
 SPEC CHECKSUMS:
-  Kiwi: 73e1400209055ee9c8ba78c6012b6b642d0fb9f7
+  Kiwi: f038a6c61f7a9e4d7766bff5717aa3b3fdb75f55
   RasterPrint: de6e709ec6a756465664400f669a3b0070e433f9
-  ReactiveCocoa: 313fc53cc9aeb2bbbc3f5f13c7eac16478d9af8f
+  ReactiveCocoa: eb38dee0a0e698f73a9b25e5c1faea2bb4c79240
 
-COCOAPODS: 0.36.0.rc.1
+COCOAPODS: 0.36.3

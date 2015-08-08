@@ -8,6 +8,8 @@
 
 #import <Foundation/Foundation.h>
 
+@class RPPrinter;
+
 @interface RPPrinterManager : NSObject
 
 /**
@@ -17,5 +19,13 @@
  *
  */
 + (void)searchForPrintersWithCompletionBlock:(void (^) (NSArray *printers))completion;
+
+/**
+ *  Searches for a printer in the given address.
+ *
+ *  @param address    The IP address of the printer. Example: @"tpc:192.168.0.10"
+ *  @param completion The block called when the printer is found.
+ */
++ (void)searchForPrinterAtAddress:(NSString *)address completionBlock:(void (^)(RPPrinter *))completion;
 
 @end

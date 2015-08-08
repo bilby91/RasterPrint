@@ -18,6 +18,7 @@
 @interface RPPrinter()
 
 @property (nonatomic, strong) PortInfo *portInfo;
+@property (nonatomic, strong) SMPort *port;
 
 @end
 
@@ -28,6 +29,14 @@
 - (instancetype)initWithPortInfo:(PortInfo *)portInfo {
   if (self = [super init]) {
     self.portInfo = portInfo;
+  }
+
+  return self;
+}
+
+- (instancetype)initWithPort:(SMPort *)port {
+  if (self = [super init]) {
+    self.port = port;
   }
 
   return self;
@@ -64,13 +73,9 @@
 
   [data getBytes:rawData];
 
-  SMPort *port;
-
   @try {
     StarPrinterStatus_2 status;
-    port = [SMPort getPort:self.portInfo.portName :@"Standard" :100000];
-
-    [port beginCheckedBlock:&status :2];
+    [self.port beginCheckedBlock:&status :2];
 
     if (status.offline == SM_TRUE) {
       return;
@@ -79,14 +84,14 @@
     int totalBytesWritten = 0;
     while (totalBytesWritten < dataSize) {
       int remainingBytes = dataSize - totalBytesWritten;
-      int bytestWritten = [port writePort:rawData :totalBytesWritten :remainingBytes];
+      int bytestWritten = [self.port writePort:rawData :totalBytesWritten :remainingBytes];
       totalBytesWritten += bytestWritten;
     }
 
     if (totalBytesWritten < data.length) return;
 
-    port.endCheckedBlockTimeoutMillis = 30000;
-    [port endCheckedBlock:&status :2];
+    self.port.endCheckedBlockTimeoutMillis = 30000;
+    [self.port endCheckedBlock:&status :2];
 
     if (status.offline == SM_TRUE) {
       return;
@@ -96,7 +101,7 @@
     NSLog(@"%@",exception);
   } @finally {
     free(rawData);
-    [SMPort releasePort:port];
+    [SMPort releasePort:self.port];
   }
 }
 

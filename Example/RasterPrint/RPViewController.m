@@ -13,6 +13,86 @@
 #import <RasterPrint/RPDocument.h>
 #import <RasterPrint/RPImageRasterizer.h>
 
+@interface NSString (Printing)
+
+- (NSString *)br;
+- (NSString *)line:(NSString *)newLine;
+- (NSString *)alignLeftWithSpace:(NSUInteger)space;
+- (NSString *)alignRightWithSpace:(NSUInteger)space;
+- (NSString *)alignCenterWithSpace:(NSUInteger)space;
+- (NSString *)appendCharacter:(char)character times:(NSUInteger)times;
+
+@end
+
+@implementation NSString (Printing)
+
+- (NSString *)br {
+  return [self stringByAppendingString:@"\n"];
+}
+
+- (NSString *)line:(NSString *)newLine {
+  return [self stringByAppendingString:newLine];
+}
+
+- (NSString *)alignLeftWithSpace:(NSUInteger)space {
+  NSUInteger leftSpace = space - self.length;
+
+  if (leftSpace == 0) {
+    return self;
+  }
+
+  if (leftSpace > 0) {
+    return [self appendCharacter:' ' times:leftSpace];
+  }
+
+  return [[self substringWithRange:NSMakeRange(0, leftSpace - 3)]stringByAppendingString:@"..."];
+}
+
+- (NSString *)alignRightWithSpace:(NSUInteger)space {
+  NSUInteger leftSpace = space - self.length;
+
+  if (leftSpace == 0) {
+    return self;
+  }
+
+  if (leftSpace > 0) {
+    return [[@"" appendCharacter:' ' times:leftSpace] stringByAppendingString:self];
+  }
+
+  return [[self substringWithRange:NSMakeRange(0, leftSpace - 3)]stringByAppendingString:@"..."];
+}
+
+- (NSString *)alignCenterWithSpace:(NSUInteger)space {
+  NSUInteger leftSpace = space - self.length;
+
+  if (leftSpace == 0) {
+    return self;
+  }
+
+  if (leftSpace > 0) {
+    return [[[@"" appendCharacter:' ' times:(leftSpace / 2)]
+                  stringByAppendingString:self]
+            appendCharacter:' ' times:(leftSpace / 2 + leftSpace%2)];
+  }
+
+  return [[self substringWithRange:NSMakeRange(0, leftSpace - 3)] stringByAppendingString:@"..."];
+}
+
+- (NSString *)appendCharacter:(char)character times:(NSUInteger)times {
+  return [self stringByAppendingString:[self.class stringWithRepeatCharacter:character times:times]];
+}
+
++ (NSString *)stringWithRepeatCharacter:(char)character times:(NSUInteger)times {
+  char repeatString[times + 1];
+  memset(repeatString, character, times);
+
+  repeatString[times] = 0;
+
+  return [NSString stringWithCString:repeatString encoding:NSUTF8StringEncoding];
+}
+
+@end
+
 @interface RPViewController ()
 
 @property (weak, nonatomic) IBOutlet UIImageView *imageView;
@@ -26,10 +106,7 @@
 }
 
 - (void)print {
-  [RPPrinterManager searchForPrintersWithCompletionBlock:^(NSArray *printers) {
-
-    RPPrinter *printer = printers.firstObject;
-
+  [RPPrinterManager searchForPrinterAtAddress:@"tcp:192.168.1.6" completionBlock:^(RPPrinter *printer) {
     if (printer) {
       RPDocument *docuement = [self document];
       [printer printDocument:docuement];
@@ -71,7 +148,7 @@
   document.endOfPageMode = RPDocumentEndModeFeedAndFullCut;
   document.endOfDocumentMode = RPDocumentEndModeFeedAndFullCut;
   document.topMargin = RPDocumentTopMarginStandard;
-  document.leftMarging = 10;
+  document.leftMarging = 2;
   document.rightMargin = 0;
   document.pageLength  = 0;
 

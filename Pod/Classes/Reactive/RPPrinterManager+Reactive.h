@@ -21,4 +21,11 @@
 */
 + (RACSignal *)searchForPrinters;
 
+/**
+ *  Searches for printer in the given Address
+ *
+ *  @return Signal with the printer
+ */
++ (RACSignal *)searchForPrinterAtAddress:(NSString *)address;
+
 @end

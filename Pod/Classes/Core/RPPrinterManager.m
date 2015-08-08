@@ -29,5 +29,13 @@
   });
 }
 
++ (void)searchForPrinterAtAddress:(NSString *)address completionBlock:(void (^)(RPPrinter *))completion {
+  dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
+    SMPort *port = [SMPort getPort:address :@"" :1000];
+
+    RPPrinter *printer = [[RPPrinter alloc] initWithPort:port];
+    completion(printer);
+  });
+}
 
 @end
