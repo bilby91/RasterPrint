@@ -33,8 +33,11 @@
   dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
     SMPort *port = [SMPort getPort:address :@"" :1000];
 
-    RPPrinter *printer = [[RPPrinter alloc] initWithPort:port];
-    completion(printer);
+    if (port) {
+      completion([[RPPrinter alloc] initWithPort:port]);
+    } else {
+      completion(nil);
+    }
   });
 }
 

@@ -29,7 +29,12 @@
 + (RACSignal *)searchForPrinterAtAddress:(NSString *)address {
   return [RACSignal createSignal:^RACDisposable *(id<RACSubscriber> subscriber) {
     [self searchForPrinterAtAddress:address completionBlock:^(RPPrinter *printer) {
-      [subscriber sendNext:printer];
+      if (printer) {
+        [subscriber sendNext:printer];
+        [subscriber sendCompleted];
+      } else {
+        [subscriber sendError:nil];
+      }
     }];
 
     return nil;
